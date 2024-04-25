@@ -30,7 +30,29 @@
   system = {
     configurationRevision = with inputs; self.rev or self.dirtyRev or null;
     stateVersion = 4;
+    defaults = {
+      # $ defaults domains
+      # $ defaults read NSGlobalDomain
+      NSGlobalDomain = {
+        # 重复输入
+        ApplePressAndHoldEnabled = false;
+        # 文件扩展名
+        AppleShowAllExtensions = true;
+      };
+
+      CustomUserPreferences = {
+        "com.google.Chrome" = {
+          # 私有网络策略
+          InsecurePrivateNetworkRequestsAllowed = true;
+        };
+      };
+
+    };
+
   };
+
+  # 使用 TouchId
+  security.pam.enableSudoTouchIdAuth = true;
 
   # The platform the configuration will be used on.
   nixpkgs = {
