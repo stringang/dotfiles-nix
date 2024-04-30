@@ -1,6 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
   services.nix-daemon.enable = true;
 
   launchd.daemons.nix-daemon.serviceConfig.EnvironmentVariables.https_proxy = "http://127.0.0.1:7890";
@@ -8,6 +12,8 @@
 
   nix = {
     package = pkgs.nix;
+
+    # channel.enable = false;
 
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
@@ -18,7 +24,6 @@
       ];
 
       trusted-users = ["root" "gang.liu"];
-
     };
   };
 
@@ -31,8 +36,8 @@
     configurationRevision = with inputs; self.rev or self.dirtyRev or null;
     stateVersion = 4;
     defaults = {
-      # $ defaults domains
-      # $ defaults read NSGlobalDomain
+      # `defaults domains`
+      # `defaults read NSGlobalDomain`
       NSGlobalDomain = {
         # 重复输入
         ApplePressAndHoldEnabled = false;
@@ -46,9 +51,7 @@
           InsecurePrivateNetworkRequestsAllowed = true;
         };
       };
-
     };
-
   };
 
   # 使用 TouchId
@@ -60,9 +63,12 @@
     config.allowUnfree = true;
   };
 
-  environment.systemPackages = with pkgs;
-    [
-      vim
-    ];
+  environment.systemPackages = with pkgs; [
+    vim
+    alejandra
+    ipcalc
+    d2
+  ];
 
+  imports = [];
 }

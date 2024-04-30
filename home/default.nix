@@ -1,10 +1,13 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-#  home.username = "gang.liu";
-#  home.homeDirectory = "/Users/gang.liu";
+  #  home.username = "gang.liu";
+  #  home.homeDirectory = "/Users/gang.liu";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -21,7 +24,10 @@
 
   programs.git = {
     enable = true;
-    ignores = [ ".DS_Store" ];
+    ignores = [
+      ".DS_Store"
+      ".idea/"
+    ];
     extraConfig = {
       init.defaultBranch = "main";
     };
