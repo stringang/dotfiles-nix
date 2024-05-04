@@ -19,17 +19,37 @@
   # changes in each release.
   home.stateVersion = "23.11";
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  home = {
+    packages = [];
 
-  programs.git = {
-    enable = true;
-    ignores = [
-      ".DS_Store"
-      ".idea/"
-    ];
-    extraConfig = {
-      init.defaultBranch = "main";
+    file = {
+      ".ssh/config".source = ../config/ssh/config;
     };
   };
+
+  # Let Home Manager install and manage itself.
+  programs = {
+    home-manager.enable = true;
+
+    git = {
+      enable = true;
+      ignores = [
+        ".DS_Store"
+        ".idea/"
+      ];
+      extraConfig = {
+        init.defaultBranch = "main";
+      };
+    };
+
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+  };
+
+  imports = [
+    ./zsh.nix
+  ];
 }

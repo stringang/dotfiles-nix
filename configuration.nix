@@ -68,6 +68,7 @@
     alejandra
     ipcalc
     d2
+    nix-output-monitor
   ];
 
   imports = [];
