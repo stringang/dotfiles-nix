@@ -50,7 +50,7 @@
             home-manager.users."gang.liu" = import ./home;
           }
         ];
-        # 传递 inputs 给外部配置
+        # 传递 inputs 给 darwinSystem
         specialArgs = {inherit inputs;};
       };
 
