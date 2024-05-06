@@ -20,7 +20,13 @@
   home.stateVersion = "23.11";
 
   home = {
-    packages = [];
+    packages = with pkgs; [
+      kcat
+      minio-client
+      # reattach-to-user-namespace # for tmux
+    ];
+
+    sessionVariables = {};
 
     file = {
       ".ssh/config".source = ../config/ssh/config;
@@ -51,5 +57,6 @@
 
   imports = [
     ./zsh.nix
+    ./tmux.nix
   ];
 }

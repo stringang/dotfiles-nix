@@ -35,6 +35,8 @@
   system = {
     configurationRevision = with inputs; self.rev or self.dirtyRev or null;
     stateVersion = 4;
+    # preferences plist: ~/Library/Preferences/
+    # https://support.apple.com/guide/terminal/edit-property-lists-apda49a1bb2-577e-4721-8f25-ffc0836f6997/mac
     defaults = {
       # `defaults domains`
       # `defaults read NSGlobalDomain`
@@ -50,6 +52,11 @@
           # 私有网络策略
           InsecurePrivateNetworkRequestsAllowed = true;
         };
+
+        "com.googlecode.iterm2" = {
+          # tmux 使用剪切板
+          AllowClipboardAccess = true;
+        };
       };
     };
   };
@@ -63,12 +70,18 @@
     config.allowUnfree = true;
   };
 
+  environment.variables = {
+    # https://unix.stackexchange.com/a/746633/414774
+    EDITOR = "vim";
+  };
+
   environment.systemPackages = with pkgs; [
     vim
     alejandra
     ipcalc
     d2
     nix-output-monitor
+    tree
   ];
 
   imports = [];

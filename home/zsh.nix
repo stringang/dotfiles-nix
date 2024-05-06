@@ -9,6 +9,10 @@
       LANG = "en_US.UTF-8";
     };
 
+    localVariables = {
+      ZSH_AUTOSUGGEST_STRATEGY = ["history" "completion"];
+    };
+
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
@@ -20,8 +24,9 @@
       ];
     };
 
-    #    initExtra = ''
-    #      export LANG=en_US.UTF-8
-    #    '';
+    initExtra = ''
+      # https://github.com/zsh-users/zsh-autosuggestions/issues/132#issuecomment-491248596
+      bindkey ',' autosuggest-accept
+    '';
   };
 }
