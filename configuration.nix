@@ -75,14 +75,16 @@
     EDITOR = "vim";
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    alejandra
-    ipcalc
-    d2
-    nix-output-monitor
-    tree
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      vim
+      alejandra
+      ipcalc
+      d2
+      nix-output-monitor
+      tree
+    ]
+    ++ [inputs.agenix.packages."x86_64-darwin".default];
 
   imports = [];
 }

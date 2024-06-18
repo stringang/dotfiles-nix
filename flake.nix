@@ -15,6 +15,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # flake 输出
@@ -24,6 +29,7 @@
     flake-utils,
     nix-darwin,
     home-manager,
+    agenix,
     ...
   }:
     {
@@ -49,6 +55,7 @@
             home-manager.useUserPackages = true;
             home-manager.users."gang.liu" = import ./home;
           }
+          agenix.darwinModules.default
         ];
         # 传递 inputs 给 darwinSystem
         specialArgs = {inherit inputs;};
@@ -66,27 +73,20 @@
         nodejs = pkgs.nodejs-18_x;
         yarn = pkgs.yarn.override {inherit nodejs;};
       in {
-        devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [
-            nodejs
-            yarn
-            python3
-            pkg-config
-            git
-            rsync
-            jq
-            moreutils
-            quilt
-            bats
-            openssl
-          ];
+        devShells.default = import ./shell.nix {inherit pkgs;};
 
-          buildInputs = with pkgs; (lib.optionals (!stdenv.isDarwin) [libsecret libkrb5]
-            ++ (with xorg; [libX11 libxkbfile])
-            ++ lib.optionals stdenv.isDarwin (with pkgs.darwin.apple_sdk.frameworks; [
-              #              AppKit
-            ]));
-        };
+        #        devShells.default = pkgs.mkShell {
+        #          nativeBuildInputs = with pkgs; [
+        #            nodejs
+        #            yarn
+        #          ];
+
+        #                  buildInputs = with pkgs; (lib.optionals (!stdenv.isDarwin) [libsecret libkrb5]
+        #                    ++ (with xorg; [libX11 libxkbfile])
+        #                    ++ lib.optionals stdenv.isDarwin (with pkgs.darwin.apple_sdk.frameworks; [
+        #                      #              AppKit
+        #                    ]));
+        #        };
       }
     );
 }

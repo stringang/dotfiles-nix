@@ -23,6 +23,7 @@
     packages = with pkgs; [
       kcat
       minio-client
+      shellcheck
       # reattach-to-user-namespace # for tmux
     ];
 
@@ -46,6 +47,8 @@
       extraConfig = {
         init.defaultBranch = "main";
       };
+
+      lfs.enable = true;
     };
 
     direnv = {
