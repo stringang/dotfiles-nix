@@ -146,7 +146,24 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "secrets": "secrets"
+      }
+    },
+    "secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1718791755,
+        "narHash": "sha256-nVAPGYCq47PirGhg0HqTiqhFiMbgma3oWV7WXAHDSx0=",
+        "ref": "refs/heads/main",
+        "rev": "a4e067ca1e6b88b04f54c20fc5ba3363ada26596",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/stringang/nix-secrets.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/stringang/nix-secrets.git"
       }
     },
     "systems": {

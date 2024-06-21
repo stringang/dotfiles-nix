@@ -20,6 +20,11 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    secrets = {
+      url = "git+ssh://git@github.com/stringang/nix-secrets.git";
+      flake = false;
+    };
   };
 
   # flake 输出
@@ -30,6 +35,7 @@
     nix-darwin,
     home-manager,
     agenix,
+    secrets,
     ...
   }:
     {
@@ -56,6 +62,7 @@
             home-manager.users."gang.liu" = import ./home;
           }
           agenix.darwinModules.default
+          # ./secrets/secrets.nix
         ];
         # 传递 inputs 给 darwinSystem
         specialArgs = {inherit inputs;};

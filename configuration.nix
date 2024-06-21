@@ -25,6 +25,16 @@
 
       trusted-users = ["root" "gang.liu"];
     };
+
+    gc = {
+      automatic = true;
+      interval = {
+        Weekday = 0;
+        Hour = 0;
+        Minute = 0;
+      };
+      options = "--delete-older-than 30d";
+    };
   };
 
   programs.zsh = {
@@ -84,7 +94,9 @@
       nix-output-monitor
       tree
     ]
-    ++ [inputs.agenix.packages."x86_64-darwin".default];
+    ++ [inputs.agenix.packages."${pkgs.system}".default]; # x86_64-darwin
 
-  imports = [];
+  imports = [
+    # ./pkgs/homebrew.nix
+  ];
 }

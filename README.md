@@ -18,5 +18,6 @@
   - darwin-rebuild --list-generations
 
 ## reference
-- https://github.com/dustinlyons/nixos-config
-- [flake schema](https://nixos.wiki/wiki/Flakes#Output_schema)
+- [nixos-config](https://github.com/dustinlyons/nixos-config)
+- [flake schema](https://nixos.wiki/wiki/Flakes#Output_schema
+- [macos-defaults](https://github.com/yannbertrand/macos-defaults)
