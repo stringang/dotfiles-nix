@@ -72,7 +72,7 @@
       darwinPackages = self.darwinConfigurations."gangliu-MacBook-Pro".pkgs;
     }
     //
-    # use by `nix develop`
+    # use by `nix develop` https://nixos.wiki/wiki/Flakes#Super_fast_nix-shell
     flake-utils.lib.eachDefaultSystem
     (
       system: let
@@ -81,19 +81,6 @@
         yarn = pkgs.yarn.override {inherit nodejs;};
       in {
         devShells.default = import ./shell.nix {inherit pkgs;};
-
-        #        devShells.default = pkgs.mkShell {
-        #          nativeBuildInputs = with pkgs; [
-        #            nodejs
-        #            yarn
-        #          ];
-
-        #                  buildInputs = with pkgs; (lib.optionals (!stdenv.isDarwin) [libsecret libkrb5]
-        #                    ++ (with xorg; [libX11 libxkbfile])
-        #                    ++ lib.optionals stdenv.isDarwin (with pkgs.darwin.apple_sdk.frameworks; [
-        #                      #              AppKit
-        #                    ]));
-        #        };
       }
     );
 }
