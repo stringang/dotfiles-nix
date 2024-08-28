@@ -24,9 +24,11 @@
       ];
     };
 
+    # bindkey | grep I
     initExtra = ''
       # https://github.com/zsh-users/zsh-autosuggestions/issues/132#issuecomment-491248596
-      bindkey ',' autosuggest-accept
+      # https://github.com/zsh-users/zsh-autosuggestions/issues/532
+      bindkey '$' autosuggest-accept
     '';
   };
 }
