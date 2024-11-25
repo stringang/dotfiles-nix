@@ -24,6 +24,16 @@
       kcat
       minio-client
       shellcheck
+      skopeo
+      dive
+      vagrant
+      # dev env
+      caddy
+      nodejs_20
+      corepack_20
+      go_1_22
+      python311
+      # python311Packages.conda
       # reattach-to-user-namespace # for tmux
     ];
 

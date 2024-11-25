@@ -31,7 +31,7 @@
 openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/:$//'
 sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z
 ifconfig en0 ether
-# # Change the MAC address
+# Change the MAC address  14:7d:da:a9:a8:8c(mbp)/84:8c:8d:b1:22:26(router)
 sudo ifconfig en0 ether d8:18:fd:c0:41:96
 networksetup -detectnewhardware
 # Turn off the Wi-Fi device:

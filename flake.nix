@@ -77,8 +77,8 @@
     (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        nodejs = pkgs.nodejs-18_x;
-        yarn = pkgs.yarn.override {inherit nodejs;};
+        # nodejs = pkgs.nodejs-18_x;
+        # yarn = pkgs.yarn.override {inherit nodejs;};
       in {
         devShells.default = import ./shell.nix {inherit pkgs;};
       }
