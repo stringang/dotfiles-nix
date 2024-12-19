@@ -2,17 +2,17 @@
   description = "gang.liu macOS system config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -21,66 +21,88 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    secrets = {
-      url = "git+ssh://git@github.com/stringang/nix-secrets.git";
-      flake = false;
-    };
+#    secrets = {
+#      url = "git+ssh://git@github.com/stringang/nix-secrets.git";
+#      flake = false;
+#    };
   };
 
-  # flake 输出
-  outputs = inputs @ {
+  outputs = {
     self,
     nixpkgs,
     flake-utils,
-    nix-darwin,
-    home-manager,
-    agenix,
-    secrets,
     ...
-  }:
-    {
-      formatter."x86_64-darwin" = nixpkgs.legacyPackages."x86_64-darwin".alejandra;
+  } @ inputs: let
+    inherit (nixpkgs) lib;
+    mylib = import ./lib {inherit lib;};
 
-      # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#gangliu-MacBook-Pro
-      darwinConfigurations."gangliu-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
-        # pure evaluation 模式，
-        modules = [
-          # `nix-darwin` main config
-          ./configuration.nix
-          # `home-manager` module config
-          home-manager.darwinModules.home-manager
-          {
-            # hardcode see: https://github.com/nix-community/home-manager/issues/4026
-            users.users."gang.liu".home = "/Users/gang.liu";
+    genSpecialArgs = myvars: {
+      inherit inputs mylib myvars;
+    };
 
-            home-manager.verbose = true;
-            home-manager.backupFileExtension = "hm_bak~";
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users."gang.liu" = import ./home;
-          }
-          agenix.darwinModules.default
-          # ./secrets/secrets.nix
+    # common arguments pass to darwin & nixos hosts
+    commonArgs = {inherit inputs lib mylib genSpecialArgs;};
+
+    darwinHosts = {
+      mini = rec {
+        myvars = {
+          system = "aarch64-darwin";
+          username = "liugang";
+          homeDirectory = "/Users/liugang";
+          hostname = "liugang-mini";
+        };
+        darwinModules = [
+          ./modules/darwin
+          (./. + "/hosts/darwin-mini")
         ];
-        # 传递 inputs 给 darwinSystem
-        specialArgs = {inherit inputs;};
+        homeModules = [
+          ./home/darwin
+          (./. + "/hosts/darwin-mini/home.nix")
+        ];
       };
+      mbp = {
+        myvars = {
+          system = "x86_64-darwin";
+          username = "gang.liu";
+          homeDirectory = "/Users/gang.liu";
+        };
+        darwinModules = [
+          ./modules/darwin
+          ./hosts/darwin-mbp
+        ];
+        homeModules = [
+          ./home/darwin
+          ./hosts/darwin-mbp/home.nix
+        ];
+      };
+    };
 
-      # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations."gangliu-MacBook-Pro".pkgs;
+  in
+    {
+      darwinConfigurations =
+        builtins.mapAttrs (
+          _: value:
+            mylib.macosSystem (commonArgs // value)
+        )
+        darwinHosts;
     }
-    //
-    # use by `nix develop` https://nixos.wiki/wiki/Flakes#Super_fast_nix-shell
-    flake-utils.lib.eachDefaultSystem
-    (
+    // flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        # nodejs = pkgs.nodejs-18_x;
-        # yarn = pkgs.yarn.override {inherit nodejs;};
       in {
-        devShells.default = import ./shell.nix {inherit pkgs;};
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            alejandra
+            nil
+            taplo
+            typos
+          ];
+        };
+
+        # Format the nix code in this flake
+        formatter =
+          # alejandra is a nix formatter with a beautiful output
+          pkgs.alejandra;
       }
     );
 }

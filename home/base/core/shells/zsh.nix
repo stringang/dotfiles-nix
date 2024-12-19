@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   programs.zsh = {
     enable = true;
+    dotDir = ".config/zsh";
     autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
@@ -10,25 +11,39 @@
     };
 
     localVariables = {
+      DISABLE_MAGIC_FUNCTIONS = "true";
+      HIST_STAMPS = "yyyy-mm-dd";
       ZSH_AUTOSUGGEST_STRATEGY = ["history" "completion"];
     };
 
     oh-my-zsh = {
       enable = true;
-      theme = "robbyrussell";
-
       plugins = [
         "git"
         "golang"
         "docker"
+        "extract"
+        "vi-mode"
       ];
+      theme = "robbyrussell";
     };
 
-    # bindkey | grep I
+    plugins = [
+      {
+        name = "nix-zsh-completions";
+        src = pkgs.fetchFromGitHub {
+          owner = "nix-community";
+          repo = "nix-zsh-completions";
+          rev = "0.5.1";
+          sha256 = "sha256-bgbMc4HqigqgdkvUe/CWbUclwxpl17ESLzCIP8Sz+F8=";
+        };
+      }
+    ];
+
     initExtra = ''
-      # https://github.com/zsh-users/zsh-autosuggestions/issues/132#issuecomment-491248596
-      # https://github.com/zsh-users/zsh-autosuggestions/issues/532
       bindkey '$' autosuggest-accept
     '';
+
+    shellAliases = {};
   };
 }
