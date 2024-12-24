@@ -124,6 +124,7 @@ in {
       # "google-chrome"
       "telegram"
       "wireshark"
+      "sequel-ace" # database management
     ];
   };
 }

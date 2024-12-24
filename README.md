@@ -24,6 +24,15 @@
     - sudo 删除还是有同样问题
   - darwin-rebuild --list-generations
 
+## debug
+
+```
+# 进入 nix repl 解释器
+nix --experimental-features 'nix-command flakes' repl
+# 加载
+nix-repl> :lf .
+```
+
 ## zsh
 
 ### mac spoofing
