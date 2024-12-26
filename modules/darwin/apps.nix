@@ -105,10 +105,12 @@ in {
       # Bob = 1630034110;
     };
 
+    # formula repositories
     taps = [
       "localsend/localsend"
     ];
 
+    # formulae
     brews = [
       "flyctl"
     ];
@@ -125,6 +127,7 @@ in {
       "telegram"
       "wireshark"
       "sequel-ace" # database management
+      "goland"
     ];
   };
 }
