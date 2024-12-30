@@ -30,4 +30,10 @@
     ];
   };
 
+  programs.zsh = {
+    shellAliases = {
+      mac_spoof = "sudo ifconfig en1 ether 61:ab:01:64:ea:be";
+    };
+  };
+
 }
