@@ -1,4 +1,4 @@
-{lib, ...}: {
+{lib, pkgs, ...}: {
   programs.ssh = {
     enable = true;
     extraConfig = ''
@@ -11,6 +11,7 @@
 
   programs.go = rec {
     enable = true;
+    # package = pkgs-unstable.go_1_23;
     goPath = "go";
     goBin = "${goPath}/bin";
   };
