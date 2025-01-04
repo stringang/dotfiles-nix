@@ -18,7 +18,8 @@ in {
     cowsay
     gnupg
     gnumake
-    # coreutils
+    coreutils
+    ed
 
     # search for files by name, faster than find
     fd
