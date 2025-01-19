@@ -63,8 +63,9 @@
       mbp = {
         myvars = {
           system = "x86_64-darwin";
-          username = "gang.liu";
-          homeDirectory = "/Users/gang.liu";
+          username = "liugang";
+          homeDirectory = "/Users/liugang";
+          hostname = "liugang-mbp";
         };
         darwinModules = [
           ./modules/darwin
