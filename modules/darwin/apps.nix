@@ -103,6 +103,7 @@ in {
       # Wechat = 836500024;
       # QQ = 451108668;
       # Bob = 1630034110;
+      "Microsoft Word" = 462054704;
     };
 
     # formula repositories

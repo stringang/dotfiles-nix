@@ -11,6 +11,7 @@
 ## quick start 
 
 - 手动安装 `nix` & `homebrew`
+- 下载 nixpkgs 需开启 TUN 模式
 
 ## 操作步骤
 - 根据 [nix-darwin](https://github.com/LnL7/nix-darwin#flakes) 文档初始化
