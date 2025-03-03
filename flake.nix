@@ -21,10 +21,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-#    secrets = {
-#      url = "git+ssh://git@github.com/stringang/nix-secrets.git";
-#      flake = false;
-#    };
+    #    secrets = {
+    #      url = "git+ssh://git@github.com/stringang/nix-secrets.git";
+    #      flake = false;
+    #    };
   };
 
   outputs = {
@@ -76,8 +76,23 @@
           ./hosts/darwin-mbp/home.nix
         ];
       };
+      work = {
+        myvars = {
+          system = "aarch64-darwin";
+          username = "yuzhang";
+          homeDirectory = "/Users/yuzhang";
+          hostname = "yuzhang-mbp";
+        };
+        darwinModules = [
+          ./modules/darwin
+          ./hosts/darwin-work
+        ];
+        homeModules = [
+          ./home/darwin
+          ./hosts/darwin-work/home.nix
+        ];
+      };
     };
-
   in
     {
       darwinConfigurations =
