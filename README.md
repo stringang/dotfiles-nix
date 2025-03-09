@@ -18,7 +18,7 @@
   - 替换 hostname `scutil --get LocalHostName`
   - 安装 `nix --experimental-features 'nix-command flakes' run nix-darwin -- switch --flake .#mini`
     - 手动备份文件(`mv /etc/zshrc /etc/bashrc.before-nix-darwin`)
-  - 构建 `darwin-rebuild switch --flake .`
+  - 构建 `NIX_DEBUG=1 darwin-rebuild switch --flake .#mini --show-trace --print-build-logs --verbose`
 
 ## pitfalls
 - 频繁操作导致 github rate limit，然后配置了 `access-tokens`(`~/.config/nix/nix.conf`)，之后在非 sudo 环境遇到 (`Bad credentials`)，[之后删除 `access-tokens` 才行](https://discourse.nixos.org/t/nix-commands-fail-github-requests-401-without-sudo/30038)。原因是配置的 token 设置了有效期。
@@ -31,12 +31,39 @@
 
 ## debug
 
+1. 通过 REPL 排查
 ```
 # 进入 nix repl 解释器
 nix --experimental-features 'nix-command flakes' repl
 # 加载
 nix-repl> :lf .
+
+nix repl -f '<nixpkgs>'
 ```
+
+2. 通过 build 产物
+
+```
+darwin-rebuild build --flake .#mini --show-trace --print-build-logs --verbose
+```
+
+## Derivation
+
+```shell
+# 查看本地 drv 内容
+nix derivation show /nix/store/j4avzn6fll1d1v588pss8nrmjfxlwlar-maven-3.6.3.drv
+# 查看 pkgs 仓库 drv 内容
+nix derivation show nixpkgs#maven
+# 查看当前系统 drv 内容
+nix derivation show -r /run/current-system
+# 构建 drv
+nix-store -r /nix/store/5y616j03c24dinqz74zr745i6nybmgkx-maven-3.9.9.drv
+```
+
+### stdenv
+
+使用 `stdenv` 构建 derivation。
+
 
 ## zsh
 

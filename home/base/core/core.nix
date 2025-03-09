@@ -5,12 +5,12 @@
 }: let
   inherit (inputs) mynur;
 in {
-#  home.sessionPath = [
-#    "/usr/local/bin"
-#    "$HOME/bin"
-#    "$HOME/.bin"
-#    "$HOME/.local/bin"
-#  ];
+  #  home.sessionPath = [
+  #    "/usr/local/bin"
+  #    "$HOME/bin"
+  #    "$HOME/.bin"
+  #    "$HOME/.local/bin"
+  #  ];
 
   home.packages = with pkgs; [
     # Misc
@@ -24,7 +24,7 @@ in {
     # search for files by name, faster than find
     fd
     # search for files by its content, replacement of grep
-#    (ripgrep.override {withPCRE2 = true;})
+    #    (ripgrep.override {withPCRE2 = true;})
 
     # A fast and polyglot tool for code searching, linting, rewriting at large scale
     # supported languages: only some mainstream languages currently(do not support nix/nginx/yaml/toml/...)
@@ -54,12 +54,12 @@ in {
 
     bat = {
       enable = true;
-      config.theme = "Catppuccin Mocha";
+      # config.theme = "Catppuccin Mocha";
       themes = {
-#        "Catppuccin Mocha" = {
-#          src = mynur.legacyPackages.${pkgs.system}.catppuccinThemes.bat;
-#          file = "themes/Catppuccin Mocha.tmTheme";
-#        };
+        #        "Catppuccin Mocha" = {
+        #          src = mynur.legacyPackages.${pkgs.system}.catppuccinThemes.bat;
+        #          file = "themes/Catppuccin Mocha.tmTheme";
+        #        };
       };
     };
 
