@@ -2,18 +2,12 @@
 
 使用 Nix 管理 dotfiles
 
-#### Table of Content
-- [使用](#操作步骤)
-- [caveats](#pitfalls)
-- [Zsh](#zsh)
-  - [MAC spoof](#mac-spoofing) 
-
 ## quick start 
 
 - 手动安装 `nix` & `homebrew`
 - 下载 nixpkgs 需开启 TUN 模式
 
-## 操作步骤
+### install
 - 根据 [nix-darwin](https://github.com/LnL7/nix-darwin#flakes) 文档初始化
   - 替换 hostname `scutil --get LocalHostName`
   - 安装 `nix --experimental-features 'nix-command flakes' run nix-darwin -- switch --flake .#mini`
@@ -29,7 +23,7 @@
     - sudo 删除还是有同样问题
   - darwin-rebuild --list-generations
 
-## debug
+## Troubleshooting
 
 1. 通过 REPL 排查
 ```
@@ -41,13 +35,28 @@ nix-repl> :lf .
 nix repl -f '<nixpkgs>'
 ```
 
-2. 通过 build 产物
+2. 通过 build 结果分析
 
 ```
 darwin-rebuild build --flake .#mini --show-trace --print-build-logs --verbose
 ```
 
-## Derivation
+## Nix
+
+Nix 配置文件：
+- `/etc/nix/nix.conf` 文件
+- `NIX_CONFIG` 环境变量
+- command line flags 方式 `--option <name> <value>`
+
+```shell
+# 查看配置
+nix config show
+# 指定 Nix 配置
+NIX_CONFIG="substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" darwin-rebuild build  --flake .#mini -v
+darwin-rebuild build --flake .#mini --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+```
+
+### Derivation
 
 ```shell
 # 查看本地 drv 内容
@@ -78,7 +87,6 @@ networksetup -detectnewhardware
 # Turn off the Wi-Fi device:
 networksetup -setairportpower en0 off
 ```
-
 
 ## reference
 - [nixos-config](https://github.com/dustinlyons/nixos-config)
