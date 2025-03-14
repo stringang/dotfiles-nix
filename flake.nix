@@ -38,6 +38,12 @@
 
     genSpecialArgs = myvars: {
       inherit inputs mylib myvars;
+
+      pkgs-stable = import inputs.nixpkgs {
+        inherit (myvars) system;
+        # pass-through Allow unfree packages
+        config.allowUnfree = true;
+      };
     };
 
     # common arguments pass to darwin & nixos hosts
