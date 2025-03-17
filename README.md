@@ -29,7 +29,7 @@
 ```
 # 进入 nix repl 解释器
 nix --experimental-features 'nix-command flakes' repl
-# 加载
+# 加载 flake 然后查看 flake 内容
 nix-repl> :lf .
 
 nix repl -f '<nixpkgs>'

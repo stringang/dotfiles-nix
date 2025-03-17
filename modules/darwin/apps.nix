@@ -129,6 +129,7 @@ in {
       "wireshark"
       "sequel-ace" # database management
       "goland"
+      "raycast"
     ];
   };
 }
