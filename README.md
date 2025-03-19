@@ -31,6 +31,8 @@
 nix --experimental-features 'nix-command flakes' repl
 # 加载 flake 然后查看 flake 内容
 nix-repl> :lf .
+# 在 repl 中输出 json 格式
+nix-repl> builtins.toJSON outputs.darwinConfigurations.
 
 nix repl -f '<nixpkgs>'
 ```
@@ -86,6 +88,15 @@ sudo ifconfig en0 ether d8:18:fd:c0:41:96
 networksetup -detectnewhardware
 # Turn off the Wi-Fi device:
 networksetup -setairportpower en0 off
+```
+
+## macOS
+
+```shell
+# 查看所有
+defaults domains
+# 查看指定
+defaults read com.apple.dock
 ```
 
 ## reference

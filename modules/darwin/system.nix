@@ -80,6 +80,27 @@
           # tmux 使用剪切板
           AllowClipboardAccess = true;
         };
+
+        # https://github.com/LnL7/nix-darwin/issues/518#issuecomment-2629087091
+        "com.apple.symbolichotkeys" = {
+          AppleSymbolicHotKeys = {
+            # Disable 'Cmd + Space' for Spotlight Search
+            "64" = {
+              enabled = false;
+            };
+          };
+        };
+
+        "com.raycast.macos" = {
+          "NSStatusItem Visible raycastIcon" = true;
+          "raycastGlobalHotkey" = "Command-49"; # replace Spotlight
+        };
+      };
+
+      # 查看 `sudo defaults read /Library/Preferences/com.apple.loginwindow`
+      loginwindow = {
+        GuestEnabled = false; # disable guest user
+        SHOWFULLNAME = false; # show full name in login window
       };
     };
   };
