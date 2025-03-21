@@ -20,10 +20,17 @@
         };
       }))
 
-    python312Full # Python interpreter
-    python312Packages.argcomplete
-    python312Packages.pip # Pip installer
-    python312Packages.conda
+    poetry # Python package manager
+    pyright # Python language server
+    # 参考 https://nixos.org/manual/nixpkgs/stable/#python
+    (python312.withPackages
+      (ps:
+        with ps; [
+          requests
+          conda
+          argcomplete
+          pip
+        ]))
   ];
 
   programs.ssh = {
