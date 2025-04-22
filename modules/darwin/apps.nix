@@ -109,6 +109,7 @@ in {
     # formula repositories
     taps = [
       "localsend/localsend"
+      "hashicorp/tap"
     ];
 
     # formulae
@@ -129,7 +130,8 @@ in {
       "wireshark"
       "sequel-ace" # database management
       "goland"
-      "raycast"
+      "raycast" # replace mac spotlight
+      "orbstack" # container
     ];
   };
 }

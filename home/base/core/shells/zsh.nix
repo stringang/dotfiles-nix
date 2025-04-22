@@ -24,6 +24,7 @@
         "docker"
         "extract"
         "vi-mode"
+        "vagrant"
       ];
       theme = "robbyrussell";
     };
