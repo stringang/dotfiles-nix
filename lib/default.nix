@@ -1,5 +1,6 @@
 {lib, ...}: {
   macosSystem = import ./macosSystem.nix;
+  #
   attrs = import ./attrs.nix {inherit lib;};
 
   # use path relative to the root of the project
@@ -11,7 +12,7 @@
       (lib.attrsets.filterAttrs
         (
           path: _type:
-            (_type == "directory") # include directories
+            (_type == "directory" && !(lib.strings.hasInfix "nvim" path)) # include directories but exclude nvim directory
             || (
               (path != "default.nix") # ignore default.nix
               && (lib.strings.hasSuffix ".nix" path) # include .nix files
