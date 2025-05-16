@@ -33,8 +33,8 @@ let
   };
 
   local_proxy_env = {
-#     HTTP_PROXY = "http://127.0.0.1:7890";
-#     HTTPS_PROXY = "http://127.0.0.1:7890";
+    #     HTTP_PROXY = "http://127.0.0.1:7890";
+    #     HTTPS_PROXY = "http://127.0.0.1:7890";
   };
 
   homebrew_env_script =
@@ -98,24 +98,13 @@ in {
     # You need to install all these Apps manually first so that your apple account have records for them.
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
-    masApps = {
-      # Xcode = 497799835;
-      # Wechat = 836500024;
-      # QQ = 451108668;
-      # Bob = 1630034110;
-      "Microsoft Word" = 462054704;
-    };
+    masApps = {};
 
     # formula repositories
-    taps = [
-      "localsend/localsend"
-      "hashicorp/tap"
-    ];
+    taps = [];
 
     # formulae
-    brews = [
-      "flyctl"
-    ];
+    brews = [];
 
     # `brew install --cask`
     casks = [
@@ -125,11 +114,7 @@ in {
       "snipaste"
       "obsidian"
       "visual-studio-code"
-      # "google-chrome"
-      "telegram"
-      "wireshark"
-      "sequel-ace" # database management
-      "goland"
+      "google-chrome"
       "raycast" # replace mac spotlight
       "orbstack" # container
     ];
